@@ -1233,7 +1233,7 @@ export class Viewer extends EventDispatcher {
 				if (!mousedown) return;
 				e.preventDefault();
 				sidebarContainer.css('width', e.pageX + 'px');
-				canvas.css('width', ($(window).width() - e.pageX) + 'px');
+				//canvas.css('width', ($(window).width() - e.pageX) + 'px'); ne marche pas car les éléments sont en position absolute
 			});
 
 			$(window).on('mouseup', function (e) {
