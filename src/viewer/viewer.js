@@ -1208,6 +1208,7 @@ export class Viewer extends EventDispatcher {
 		}
 
 		let viewer = this;
+		let mousedown = false;
 		let sidebarContainer = $('#potree_sidebar_container');
 		sidebarContainer.load(new URL(Potree.scriptPath + '/sidebar.html').href, () => {
 			sidebarContainer.css('width', '300px');
@@ -1223,6 +1224,21 @@ export class Viewer extends EventDispatcher {
 			imgMapToggle.style.display = 'none';
 			imgMapToggle.onclick = e => { this.toggleMap(); };
 			imgMapToggle.id = 'potree_map_toggle';
+
+			sidebarContainer.on('mousedown', function (e) {
+				mousedown = true;
+			});
+
+			$(window).on('mousemove', function (e) {
+				if (!mousedown) return;
+				e.preventDefault();
+				sidebarContainer.css('width', e.pageX + 'px');
+				canvas.css('width', ($(window).width() - e.pageX) + 'px');
+			});
+
+			$(window).on('mouseup', function (e) {
+				mousedown = false;
+			});
 
 			let elButtons = $("#potree_quick_buttons").get(0);
 
